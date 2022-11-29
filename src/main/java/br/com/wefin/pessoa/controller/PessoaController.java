@@ -51,19 +51,18 @@ public class PessoaController {
     public ResponseEntity<Pessoa> add(@Valid @RequestBody Pessoa pessoa) {
         Pessoa pes = pessoaService.savePessoa(pessoa);
         return new ResponseEntity<>(pes, HttpStatus.CREATED); // 201
-//        return ResponseEntity.ok("User is valid");
     }
 
     // PUT
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody Pessoa pessoa) {
+    public ResponseEntity<Pessoa> update(@PathVariable Integer id, @Valid @RequestBody Pessoa pessoa) {
         try {
             Pessoa atual = pessoaService.getPessoa(id);
             pessoa.setId(atual.getId());
-            pessoaService.savePessoa(pessoa);
-            return new ResponseEntity<>(HttpStatus.OK); // 200
+            Pessoa pes = pessoaService.savePessoa(pessoa);
+            return new ResponseEntity<>(pes, HttpStatus.OK); // 200
         } catch (NoSuchElementException e) {
-            return new ResponseEntity<Pessoa>(HttpStatus.NOT_FOUND); // 404
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // 404
         }
     }
 

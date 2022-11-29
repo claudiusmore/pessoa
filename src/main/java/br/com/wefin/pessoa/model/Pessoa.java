@@ -4,13 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.br.CNPJ;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -28,10 +25,7 @@ public class Pessoa {
     private String nome;
 
     @NotBlank(message = "'identificador' é obrigatório")
-//    @CPF(groups = CpfGroup.class)
-//    @CNPJ(groups = CnpjGroup.class)
-//    @CpfOrCnpj(message = "o campo deve ser formatado como cpf ou cnpj")
-    @Pattern(regexp = "([0-9]{11})|([0-9]{14})",message = "'identificador' deve ser cpf ou cnpj")
+    @Pattern(regexp = "(/d{11})|(/d{14})",message = "'identificador' deve ter tamanho 11(cpf) ou 14(cnpj)")
     private String identificador;
 
     private String tipoIdentificador;

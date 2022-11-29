@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-
-import java.util.Optional;
 
 @Service
 public class PessoaService {
@@ -18,22 +15,24 @@ public class PessoaService {
 
 
     public Page<Pessoa> listAllPessoa(Pageable page) {
-        Page<Pessoa> response = pessoaRepository.findAll(page);
-        return response;
+        return pessoaRepository.findAll(page);
     }
 
     public Pessoa getPessoa(Integer id) {
-        Pessoa pessoa = pessoaRepository.findById(id).get();
-        return pessoa;
+        return pessoaRepository.findById(id).get();
     }
 
     public Pessoa savePessoa(Pessoa pessoa) {
-        pessoa.setTipoIdentificador(null);
+        pessoa.setTipoIdentificador(getCpfCnpj(pessoa.getIdentificador().length()));
         return pessoaRepository.save(pessoa);
     }
 
     public void deletePessoa(Integer id) {
         pessoaRepository.deleteById(id);
+    }
+
+    private String getCpfCnpj(int identificador) {
+        return identificador == 11 ? "Cpf" : "Cnpj";
     }
 
 }
