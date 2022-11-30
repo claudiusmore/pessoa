@@ -31,7 +31,7 @@ public class PessoaService {
         pessoaRepository.deleteById(id);
     }
 
-    private String getCpfCnpj(int identificador) {
+    public String getCpfCnpj(int identificador) {
         return identificador == 11 ? "Cpf" : "Cnpj";
     }
 
